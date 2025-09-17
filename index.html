@@ -19,25 +19,25 @@
     .header-brand{display:flex;align-items:center;gap:10px;}
     .header-brand img{height:40px;width:40px;object-fit:contain;}
     .header-brand .brand-text{display:flex;flex-direction:column;line-height:1.2;}
-    .header-brand .line1{font-size:1rem;font-weight:bold;color:#ffffff;}
-    .header-brand .line2{font-size:0.8rem;font-weight:600;color:#ddd;}
+    .header-brand .line1{font-size:1rem;font-weight:bold;color:#0073e6;}
+    .header-brand .line2{font-size:0.8rem;font-weight:600;color:#0073e6;}
     header.scrolled .header-brand .line1,
     header.scrolled .header-brand .line2{color:#333;}
 
     nav{display:flex;gap:25px;}
     nav a{
-      text-decoration:none;font-weight:600;font-size:1rem;color:#f8f8f8;
-      transition:color 0.3s ease;
+      text-decoration:none;font-weight:600;font-size:1rem;color:#000;
+      transition:color 0.3s ease;cursor:pointer;
     }
-    nav a:hover{color:#ffd700;}
+    nav a:hover{color:#0073e6;}
     header.scrolled{background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-    header.scrolled nav a{color:rgba(255, 166, 0, 0.909);}
+    header.scrolled nav a{color:#0073e6;}
     header.scrolled .menu-toggle span{background:#333;}
     .menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;}
-    .menu-toggle span{width:25px;height:3px;background:#fff;transition:background 0.3s ease;}
+    .menu-toggle span{width:25px;height:3px;background:#000;transition:background 0.3s ease;}
     @media(max-width:768px){
       nav{display:none;flex-direction:column;position:absolute;top:60px;right:40px;background:rgba(255,255,255,0.95);padding:15px;border-radius:8px;}
-      nav a{color:#333;}
+      nav a{color:#000;}
       nav.active{display:flex;}
       .menu-toggle{display:flex;}
     }
@@ -47,7 +47,6 @@
     .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;}
     .slide img{width:100%;height:100%;object-fit:cover;}
     .slide.active{opacity:1;z-index:1;}
-    .slide.active img{transform:scale(1.05);transition:transform 8s ease;}
     .overlay-text{
       position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
       font-size:2.5rem;font-weight:bold;color:#fff;text-align:center;
@@ -56,14 +55,149 @@
       padding:0 20px;
     }
     .slide.active .overlay-text{opacity:1;}
-    @media(max-width:1024px){.overlay-text{font-size:2rem;}}
-    @media(max-width:768px){.overlay-text{font-size:1.5rem;}}
-    @media(max-width:480px){.overlay-text{font-size:1.2rem;}}
     .dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:10;}
     .dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.7);cursor:pointer;}
     .dot.active{background:#fff;}
 
     /* Sections */
+    section{padding:80px 40px;}
+    #about{background:#f9f9f9;text-align:center;}
+    #about h2{font-size:2rem;margin-bottom:20px;color:#333;}
+    #about p{max-width:900px;margin:0 auto 20px;line-height:1.6;color:#555;text-align:justify;}
+
+    /* Projects */
+#projects {
+  background: #fff;
+  text-align: center;
+}
+#projects h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+.single-project {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+.single-project img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.corner-strip {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 8px 16px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.3s ease;
+}
+.corner-strip:hover {
+  background: #000;
+}
+.corner-strip::after {
+  content: "➔"; /* arrow towards right */
+  font-size: 1rem;
+}
+
+   /* Contact Section Restructure */
+    #contact {
+      background:#f9f9f9;
+      padding:80px 40px;
+    }
+    #contact h2 {
+      text-align:center;
+      font-size:2.2rem;
+      margin-bottom:20px;
+      color:#333;
+    }
+    #contact p.intro {
+      text-align:center;
+      max-width:700px;
+      margin:0 auto 40px;
+      color:#666;
+      font-size:1rem;
+      line-height:1.5;
+    }
+    .contact-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+      gap:25px;
+      margin-top:30px;
+    }
+    .contact-card {
+      background:#fff;
+      padding:25px 20px;
+      border-radius:12px;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .contact-card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 8px 18px rgba(0,0,0,0.15);
+    }
+    .contact-card .icon {
+      font-size:2.2rem;
+      margin-bottom:12px;
+    }
+    .contact-card h3 {
+      font-size:1.2rem;
+      margin-bottom:12px;
+      color:#444;
+    }
+    .contact-card p {
+      font-size:0.95rem;
+      line-height:1.5;
+      color:#555;
+    }
+    .map-container {
+      margin-top:50px;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    }
+    .map-container iframe {
+      width:100%;
+      height:350px;
+      border:0;
+    }
+
+    /* WhatsApp */
+    .whatsapp-btn{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:15px;border-radius:50%;box-shadow:0 4px 8px rgba(0,0,0,0.2);font-size:24px;cursor:pointer;z-index:200;}
+
+    /* Footer */
+    footer{background:#111;color:#ccc;text-align:center;padding:15px;font-size:0.9rem;}
+
+    /* Popup Form */
+    .popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:300;}
+    .popup-content{background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;position:relative;}
+    .popup-content h3{text-align:center;margin-bottom:15px;}
+    .popup-content input,.popup-content textarea, .popup-content select{
+      width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:5px;
+    }
+    .popup-content button{background:#25d366;color:#fff;border:none;padding:10px 15px;cursor:pointer;border-radius:5px;width:100%;font-weight:bold;}
+    .popup-content .close{position:absolute;top:10px;right:15px;font-size:20px;cursor:pointer;color:#333;}
+  /* Portrait/mobile optimization */
+@media (orientation: portrait) {
+  .slide img {
+    object-fit: contain;  /* show full image without cropping */
+    background-color: #f6f6f6; /* optional: adds black bars around */
+  }
+}
+/* Sections */
     section{padding:80px 40px;}
     #about{background:#f9f9f9;text-align:center;}
     #about h2{font-size:2rem;margin-bottom:20px;color:#333;}
@@ -103,29 +237,6 @@
     .back p{font-size:13px;line-height:1.5;color:#444;text-align:justify;}
     .back::-webkit-scrollbar{width:6px;}
     .back::-webkit-scrollbar-thumb{background:#bbb;border-radius:4px;}
-
-    /* Projects */
-    #projects{background:#fff;}
-    #projects h2{text-align:center;font-size:2rem;margin-bottom:30px;color:#333;}
-    .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
-    .project{position:relative;overflow:hidden;border-radius:10px;}
-    .project img{width:100%;height:250px;object-fit:cover;transition:transform 0.6s;}
-    .project:hover img{transform:scale(1.1);}
-    .project .desc{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);color:#fff;padding:15px;text-align:center;transform:translateY(100%);transition:transform 0.5s;}
-    .project:hover .desc{transform:translateY(0);}
-
-    /* Contact */
-    #contact{background:#f9f9f9;}
-    #contact h2{text-align:center;font-size:2rem;margin-bottom:30px;color:#333;}
-    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
-    .address,.email{background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);} 
-    iframe{width:100%;height:200px;border:0;border-radius:10px;}
-
-    /* WhatsApp */
-    .whatsapp-btn{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:15px;border-radius:50%;box-shadow:0 4px 8px rgba(0,0,0,0.2);font-size:24px;cursor:pointer;z-index:200;}
-
-    /* Footer */
-    footer{background:#111;color:#ccc;text-align:center;padding:15px;font-size:0.9rem;}
   </style>
 </head>
 <body>
@@ -141,7 +252,7 @@
     <nav id="navMenu">
       <a href="project.html">Projects</a>
       <a href="#about">About</a>
-      <a href="projectdiscussion.html">Project Discussion</a>
+      <a id="projectDiscussionBtn">Project Discussion</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -160,14 +271,14 @@
     <h2>About Us</h2>
     <p><strong>STEEL & CRETE Structural Solutions LLP</strong> is located in Ernakulam, offering high-end engineering solutions. In keeping with global industrial developments, we provide consulting services for all types of civil & structural engineering applications.</p>
     <p>Our engineers have contributed to prestigious projects in India and abroad, with expertise in structural design, retrofitting, building construction, and vibration problems. We have executed a wide range of projects including nuclear power plants, high-rise buildings, pre-engineered structures, bridges, and machine foundations.</p>
-    
+    <h2>Leadership Team</h2>
     <div class="founders">
       <!-- Founder 1 -->
       <div class="card">
         <div class="inner">
           <div class="front">
             <img src="Dhileep.jpg" alt="Dr. Dhileep M. Kaviyad">
-            <div class="name-strip">Dr. Dhileep M. Kaviyad <span>Lead Structural Engineer</span></div>
+            <div class="name-strip">Dr. Dhileep M. Kaviyad <span> Chief Structural Engineer</span></div>
           </div>
           <div class="back">
             <h3>Dr. Dhileep M. Kaviyad</h3>
@@ -179,7 +290,7 @@
       <div class="card">
         <div class="inner">
           <div class="front">
-            <img src="Daniel.jpg" alt="Er. Daniel A V">
+            <img src="Daniel.jpeg" alt="Er. Daniel A V">
             <div class="name-strip">Er. Daniel A V <span>Senior Structural Engineer</span></div>
           </div>
           <div class="back">
@@ -192,12 +303,12 @@
       <div class="card">
         <div class="inner">
           <div class="front">
-            <img src="Ramya.jpg" alt="Er. Ramya K M">
+            <img src="Ramya.jpeg" alt="Er. Ramya K M">
             <div class="name-strip">Er. Ramya K M <span>Structural Engineer</span></div>
           </div>
           <div class="back">
             <h3>Er. Ramya K M</h3>
-            <p>Results-driven Structural Engineer with more than 10 years of experience in the analysis, design, and execution of diverse structures, including residential, commercial, industrial, and infrastructure projects. Skilled in structural design codes, seismic analysis, and sustainable design practices. </p>
+            <p>Results-driven Structural Engineer with more than 10 years of experience in the analysis, design, and execution of diverse structures, including residential, commercial, industrial, and infrastructure projects. Skilled in structural design codes, seismic analysis, and sustainable design practices.</p>
           </div>
         </div>
       </div>
@@ -205,27 +316,82 @@
   </section>
 
   <!-- Projects -->
-  <section id="projects">
-    <h2>Our Signature Projects</h2>
-    <div class="project-grid">
-      <div class="project"><img src="1.jpeg"><div class="desc">Nuclear Power Plant</div></div>
-      <div class="project"><img src="2.jpeg"><div class="desc">High Rise Building</div></div>
-      <div class="project"><img src="4.jpg"><div class="desc">Bridge Construction</div></div>
-    </div>
-  </section>
+<section id="projects">
+  <h2>Our Signature Projects</h2>
+  <div class="single-project">
+    <img src="1.jpeg" alt="Signature Project">
+    <a href="service.html" class="corner-strip">More Projects </a>
+  </div>
+</section>
+
 
   <!-- Contact -->
-   <section id="contact">
+  <section id="contact">
     <h2>Contact Us</h2>
+    <p class="intro">
+      We’d love to hear from you. Whether you’re looking for structural design services, job opportunities, 
+      or general inquiries, reach out to us at any of our locations below.
+    </p>
     <div class="contact-grid">
-      <div class="address"><h3>Corporate Office <span class="line2"></h3><p>Steel and Crete Structural Solution LLP XXVI/406,Pottachal Nagar Road,Changampuzha Nagar PO, Ernakulam - 682033</p></span><iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d31430.146250525875!2d76.2989103129192!3d10.035970623982163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sXXVI%2F406%2CPottachal%20Nagar%20Road%2CChangampuzha%20Nagar%20PO%2C%20Ernakulam%20-%20682033!5e0!3m2!1sen!2sin!4v1757668979521!5m2!1sen!2sin"></iframe></div>
-      <div class="address"><h3>WorkSpace</h3><p>Steel and Crete Structural Solution LLP XXI/152, Panadana,corrazone Cochin University PO, Kalamasery, Ernakulam - 682022</p></span><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.6294434312263!2d76.33129137354146!3d10.047405172220234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d18167f5c5f%3A0x93154f2ad50a56b9!2sCorrazone%20Coworking%20Space!5e0!3m2!1sen!2sin!4v1757669793410!5m2!1sen!2sin"></iframe></div>
-      <div class="email"><h3>For Structural Design : -</h3><p>projects@steelandcrete.com</p><h3>Job Opportunities :- </h3><p>steelandcrete@gmail.com</p></div>
-       
+      <!-- Corporate Office -->
+      <div class="contact-card">
+        <div class="icon">🏢</div>
+        <h3>Corporate Office</h3>
+        <p>
+          Steel and Crete Structural Solution LLP<br>
+          XXVI/406, Pottachal Nagar Road,<br>
+          Changampuzha Nagar PO,<br>
+          Ernakulam - 682033
+        </p>
+      </div>
+      <!-- Workspace -->
+      <div class="contact-card">
+        <div class="icon">🏗️</div>
+        <h3>WorkSpace</h3>
+        <p>
+          Steel and Crete Structural Solution LLP<br>
+          XXI/152, Panadana, Corrazone<br>
+          Cochin University PO, Kalamasery,<br>
+          Ernakulam - 682022
+        </p>
+      </div>
+      <!-- Email -->
+      <div class="contact-card">
+        <div class="icon">📧</div>
+        <h3>Get in Touch</h3>
+        <p><strong>For Structural Design:</strong><br>projects@steelandcrete.com</p>
+        <p><strong>Job Opportunities:</strong><br>steelandcrete@gmail.com</p>
+      </div>
+    </div>
+
+    <!-- Google Map -->
+    <div class="map-container">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d31430.146250525875!2d76.2989103129192!3d10.035970623982163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sXXVI%2F406%2CPottachal%20Nagar%20Road%2CChangampuzha%20Nagar%20PO%2C%20Ernakulam%20-%20682033!5e0!3m2!1sen!2sin!4v1757668979521!5m2!1sen!2sin" 
+        allowfullscreen="" loading="lazy"></iframe>
     </div>
   </section>
 
   <a href="https://wa.me/918943824028" target="_blank" class="whatsapp-btn">💬</a>
+
+  <!-- Popup -->
+  <div class="popup" id="popupForm">
+    <div class="popup-content">
+      <span class="close" id="closePopup">&times;</span>
+      <h3>Project Discussion</h3>
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="text" id="phone" placeholder="Phone Number" required>
+      <input type="email" id="email" placeholder="Email ID" required>
+      <select id="type">
+        <option value="">Select Project Type</option>
+        <option>Architecture</option>
+        <option>Interior</option>
+        <option>Structure</option>
+      </select>
+      <textarea id="details" rows="4" placeholder="Tell us more about your project"></textarea>
+      <button id="sendBtn">Submit to WhatsApp</button>
+    </div>
+  </div>
 
   <footer>Website was developed and deployed by TES</footer>
 
@@ -266,6 +432,29 @@
       } else {
         header.classList.remove('scrolled');
       }
+    });
+
+    // Popup handling
+    const popup=document.getElementById('popupForm');
+    const projectBtn=document.getElementById('projectDiscussionBtn');
+    const closePopup=document.getElementById('closePopup');
+    projectBtn.addEventListener('click',()=>popup.style.display='flex');
+    closePopup.addEventListener('click',()=>popup.style.display='none');
+    window.addEventListener('click',(e)=>{if(e.target==popup) popup.style.display='none';});
+
+    // WhatsApp integration
+    document.getElementById('sendBtn').addEventListener('click',()=>{
+      const name=document.getElementById('name').value;
+      const phone=document.getElementById('phone').value;
+      const email=document.getElementById('email').value;
+      const type=document.getElementById('type').value;
+      const details=document.getElementById('details').value;
+
+      if(!name||!phone||!email||!type){alert("Please fill all required fields");return;}
+
+      const msg=`Project Discussion:%0AName: ${name}%0APhone: ${phone}%0AEmail: ${email}%0AType: ${type}%0ADetails: ${details}`;
+      const whatsappUrl=`https://wa.me/918943824028?text=${msg}`;
+      window.open(whatsappUrl,'_blank');
     });
   </script>
 </body>
