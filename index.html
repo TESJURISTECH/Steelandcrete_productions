@@ -189,7 +189,32 @@
       width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:5px;
     }
     .popup-content button{background:#25d366;color:#fff;border:none;padding:10px 15px;cursor:pointer;border-radius:5px;width:100%;font-weight:bold;}
-    .popup-content .close{position:absolute;top:10px;right:15px;font-size:20px;cursor:pointer;color:#333;}
+    .popup-content .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;       /* slightly bigger for mobile */
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease;
+  z-index: 500;
+  user-select: none;
+}
+
+.popup-content .close:hover {
+  color: #0073e6;  /* blue on hover */
+}
+
+/* Make close button touch-friendly on mobile */
+@media(max-width:768px){
+  .popup-content .close {
+    top: 12px;
+    right: 18px;
+    font-size: 32px;
+  }
+}
+
   /* Portrait/mobile optimization */
 @media (orientation: portrait) {
   .slide img {
@@ -290,7 +315,7 @@
       <div class="card">
         <div class="inner">
           <div class="front">
-            <img src="Daniel.jpg" alt="Er. Daniel A V">
+            <img src="Daniel.jpeg" alt="Er. Daniel A V">
             <div class="name-strip">Er. Daniel A V <span>Senior Structural Engineer</span></div>
           </div>
           <div class="back">
@@ -303,7 +328,7 @@
       <div class="card">
         <div class="inner">
           <div class="front">
-            <img src="Ramya.jpg" alt="Er. Ramya K M">
+            <img src="Ramya.jpeg" alt="Er. Ramya K M">
             <div class="name-strip">Er. Ramya K M <span>Structural Engineer</span></div>
           </div>
           <div class="back">
@@ -320,7 +345,7 @@
   <h2>Our Signature Projects</h2>
   <div class="single-project">
     <img src="1.jpeg" alt="Signature Project">
-    <a href="project.html" class="corner-strip">More Projects </a>
+    <a href="service.html" class="corner-strip">More Projects </a>
   </div>
 </section>
 
@@ -459,5 +484,3 @@
   </script>
 </body>
 </html>
-
-
