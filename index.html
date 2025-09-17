@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steel and Crete</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body,html{font-family:Arial, sans-serif;scroll-behavior:smooth;overflow-x:hidden;}
+
+    /* Header */
+    header{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:15px 40px;
+      background:transparent;
+      transition:background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .header-brand{display:flex;align-items:center;gap:10px;}
+    .header-brand img{height:40px;width:40px;object-fit:contain;}
+    .header-brand .brand-text{display:flex;flex-direction:column;line-height:1.2;}
+    .header-brand .line1{font-size:1rem;font-weight:bold;color:#ffffff;}
+    .header-brand .line2{font-size:0.8rem;font-weight:600;color:#ddd;}
+    header.scrolled .header-brand .line1,
+    header.scrolled .header-brand .line2{color:#333;}
+
+    nav{display:flex;gap:25px;}
+    nav a{
+      text-decoration:none;font-weight:600;font-size:1rem;color:#f8f8f8;
+      transition:color 0.3s ease;
+    }
+    nav a:hover{color:#ffd700;}
+    header.scrolled{background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+    header.scrolled nav a{color:rgba(255, 166, 0, 0.909);}
+    header.scrolled .menu-toggle span{background:#333;}
+    .menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .menu-toggle span{width:25px;height:3px;background:#fff;transition:background 0.3s ease;}
+    @media(max-width:768px){
+      nav{display:none;flex-direction:column;position:absolute;top:60px;right:40px;background:rgba(255,255,255,0.95);padding:15px;border-radius:8px;}
+      nav a{color:#333;}
+      nav.active{display:flex;}
+      .menu-toggle{display:flex;}
+    }
+
+    /* Slider */
+    .slider{position:relative;height:100vh;width:100%;overflow:hidden;}
+    .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;}
+    .slide img{width:100%;height:100%;object-fit:cover;}
+    .slide.active{opacity:1;z-index:1;}
+    .slide.active img{transform:scale(1.05);transition:transform 8s ease;}
+    .overlay-text{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-size:2.5rem;font-weight:bold;color:#fff;text-align:center;
+      text-shadow:0 3px 8px rgba(0,0,0,0.7);
+      opacity:0;transition:opacity 1s ease;
+      padding:0 20px;
+    }
+    .slide.active .overlay-text{opacity:1;}
+    @media(max-width:1024px){.overlay-text{font-size:2rem;}}
+    @media(max-width:768px){.overlay-text{font-size:1.5rem;}}
+    @media(max-width:480px){.overlay-text{font-size:1.2rem;}}
+    .dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:10;}
+    .dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.7);cursor:pointer;}
+    .dot.active{background:#fff;}
+
+    /* Sections */
+    section{padding:80px 40px;}
+    #about{background:#f9f9f9;text-align:center;}
+    #about h2{font-size:2rem;margin-bottom:20px;color:#333;}
+    #about p{max-width:900px;margin:0 auto 20px;line-height:1.6;color:#555;text-align:justify;}
+
+    /* Founders */
+    .founders{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:40px;}
+    .card{perspective:1000px;}
+    .inner{position:relative;width:100%;height:370px;transform-style:preserve-3d;transition:transform 0.8s;}
+    .card:hover .inner{transform:rotateY(180deg);}
+    .front,.back{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;overflow:hidden;box-shadow:0 4px 8px rgba(0,0,0,0.2);} 
+
+    /* Front with centered photo + black strip */
+    .front{display:flex;align-items:center;justify-content:center;flex-direction:column;background:#fff;}
+    .front img{width:100%;height:100%;object-fit:contain;background:#fff;}
+    .name-strip{
+      position:absolute;bottom:0;left:0;right:0;
+      background:rgba(0,0,0,0.85);
+      color:#fff;
+      padding:8px;
+      font-size:14px;
+      text-align:center;
+      font-weight:600;
+    }
+    .name-strip span{display:block;font-size:12px;font-weight:400;}
+
+    /* Back with scrollable stylish description */
+    .back{
+      background:linear-gradient(135deg,#fdfdfd,#f3f3f3);
+      transform:rotateY(180deg);
+      display:flex;flex-direction:column;align-items:center;
+      padding:15px;
+      text-align:center;
+      overflow-y:auto;
+    }
+    .back h3{font-size:16px;margin-bottom:10px;color:#222;}
+    .back p{font-size:13px;line-height:1.5;color:#444;text-align:justify;}
+    .back::-webkit-scrollbar{width:6px;}
+    .back::-webkit-scrollbar-thumb{background:#bbb;border-radius:4px;}
+
+    /* Projects */
+    #projects{background:#fff;}
+    #projects h2{text-align:center;font-size:2rem;margin-bottom:30px;color:#333;}
+    .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .project{position:relative;overflow:hidden;border-radius:10px;}
+    .project img{width:100%;height:250px;object-fit:cover;transition:transform 0.6s;}
+    .project:hover img{transform:scale(1.1);}
+    .project .desc{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);color:#fff;padding:15px;text-align:center;transform:translateY(100%);transition:transform 0.5s;}
+    .project:hover .desc{transform:translateY(0);}
+
+    /* Contact */
+    #contact{background:#f9f9f9;}
+    #contact h2{text-align:center;font-size:2rem;margin-bottom:30px;color:#333;}
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .address,.email{background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);} 
+    iframe{width:100%;height:200px;border:0;border-radius:10px;}
+
+    /* WhatsApp */
+    .whatsapp-btn{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:15px;border-radius:50%;box-shadow:0 4px 8px rgba(0,0,0,0.2);font-size:24px;cursor:pointer;z-index:200;}
+
+    /* Footer */
+    footer{background:#111;color:#ccc;text-align:center;padding:15px;font-size:0.9rem;}
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-brand">
+      <img src="logo.png" alt="Logo">
+      <div class="brand-text">
+        <span class="line1">Steel & Crete</span>
+        <span class="line2">Structural Solutions LLP</span>
+      </div>
+    </div>
+    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+    <nav id="navMenu">
+      <a href="project.html">Projects</a>
+      <a href="#about">About</a>
+      <a href="projectdiscussion.html">Project Discussion</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Slider -->
+  <section class="slider" id="slider">
+    <div class="slide active"><img src="1.jpeg"><div class="overlay-text">Tailored Designs For Structures</div></div>
+    <div class="slide"><img src="3.jpeg"><div class="overlay-text">Architectural Components</div></div>
+    <div class="slide"><img src="4.jpg"><div class="overlay-text">Cutting Edge Engineering Solutions</div></div>
+    <div class="slide"><img src="2.jpeg"><div class="overlay-text">Turning Dreams into Reality</div></div>
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <!-- About / Founders -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p><strong>STEEL & CRETE Structural Solutions LLP</strong> is located in Ernakulam, offering high-end engineering solutions. In keeping with global industrial developments, we provide consulting services for all types of civil & structural engineering applications.</p>
+    <p>Our engineers have contributed to prestigious projects in India and abroad, with expertise in structural design, retrofitting, building construction, and vibration problems. We have executed a wide range of projects including nuclear power plants, high-rise buildings, pre-engineered structures, bridges, and machine foundations.</p>
+    
+    <div class="founders">
+      <!-- Founder 1 -->
+      <div class="card">
+        <div class="inner">
+          <div class="front">
+            <img src="Dhileep.jpg" alt="Dr. Dhileep M. Kaviyad">
+            <div class="name-strip">Dr. Dhileep M. Kaviyad <span>Lead Structural Engineer</span></div>
+          </div>
+          <div class="back">
+            <h3>Dr. Dhileep M. Kaviyad</h3>
+            <p>Well-experienced in implementing innovative and economical designs for structural systems in collaboration with other stakeholders like architects, contractors, geotechnical experts, MEP, and fire consultants. With nearly 25 years of experience in structural design and retrofitting, he has worked on a diverse set of RCC, PSC, Steel buildings, tanks, towers, machine foundations, and industrial & power plant structures. His expertise includes wind tunnel and shake table tests, aseismic design of nuclear power plants, multiscale modelling, vibration studies on bridges due to high-speed express trains, and sustainable structures. Presently, he is focusing more on the design of composite and/or sustainable structures/architectural components made up from a wide spectrum of materials.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Founder 2 -->
+      <div class="card">
+        <div class="inner">
+          <div class="front">
+            <img src="Daniel.jpg" alt="Er. Daniel A V">
+            <div class="name-strip">Er. Daniel A V <span>Senior Structural Engineer</span></div>
+          </div>
+          <div class="back">
+            <h3>Er. Daniel A V</h3>
+            <p>A dedicated Structural Engineer with over 15 years of experience in the design of RCC and steel structures. His expertise spans residential, commercial, and industrial projects, with a focus on seismic resilience and code compliance. Passionate about innovation and precision, he brings clarity and confidence to every structural challenge, helping clients realize their architectural visions with strength and reliability. He has extensive experience in designing and delivering architectural, structural, and non-structural components using steel and other materials, as well as in soil–structure interaction.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Founder 3 -->
+      <div class="card">
+        <div class="inner">
+          <div class="front">
+            <img src="Ramya.jpg" alt="Er. Ramya K M">
+            <div class="name-strip">Er. Ramya K M <span>Structural Engineer</span></div>
+          </div>
+          <div class="back">
+            <h3>Er. Ramya K M</h3>
+            <p>Results-driven Structural Engineer with more than 10 years of experience in the analysis, design, and execution of diverse structures, including residential, commercial, industrial, and infrastructure projects. Skilled in structural design codes, seismic analysis, and sustainable design practices. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2>Our Signature Projects</h2>
+    <div class="project-grid">
+      <div class="project"><img src="1.jpeg"><div class="desc">Nuclear Power Plant</div></div>
+      <div class="project"><img src="2.jpeg"><div class="desc">High Rise Building</div></div>
+      <div class="project"><img src="4.jpg"><div class="desc">Bridge Construction</div></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+   <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-grid">
+      <div class="address"><h3>Corporate Office <span class="line2"></h3><p>Steel and Crete Structural Solution LLP XXVI/406,Pottachal Nagar Road,Changampuzha Nagar PO, Ernakulam - 682033</p></span><iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d31430.146250525875!2d76.2989103129192!3d10.035970623982163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sXXVI%2F406%2CPottachal%20Nagar%20Road%2CChangampuzha%20Nagar%20PO%2C%20Ernakulam%20-%20682033!5e0!3m2!1sen!2sin!4v1757668979521!5m2!1sen!2sin"></iframe></div>
+      <div class="address"><h3>WorkSpace</h3><p>Steel and Crete Structural Solution LLP XXI/152, Panadana,corrazone Cochin University PO, Kalamasery, Ernakulam - 682022</p></span><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.6294434312263!2d76.33129137354146!3d10.047405172220234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d18167f5c5f%3A0x93154f2ad50a56b9!2sCorrazone%20Coworking%20Space!5e0!3m2!1sen!2sin!4v1757669793410!5m2!1sen!2sin"></iframe></div>
+      <div class="email"><h3>For Structural Design : -</h3><p>projects@steelandcrete.com</p><h3>Job Opportunities :- </h3><p>steelandcrete@gmail.com</p></div>
+       
+    </div>
+  </section>
+
+  <a href="https://wa.me/918943824028" target="_blank" class="whatsapp-btn">💬</a>
+
+  <footer>Website was developed and deployed by TES</footer>
+
+  <script>
+    const slides=document.querySelectorAll('.slide');
+    const dotsBox=document.getElementById('dots');
+    let idx=0,timer;
+    function makeDots(){
+      slides.forEach((_,i)=>{
+        const d=document.createElement('span');
+        d.className='dot';
+        d.addEventListener('click',()=>show(i));
+        dotsBox.appendChild(d);
+      });
+    }
+    function updateDots(){[...dotsBox.children].forEach((d,i)=>d.classList.toggle('active',i===idx));}
+    function show(i){
+      slides[idx].classList.remove('active');
+      idx=(i+slides.length)%slides.length;
+      slides[idx].classList.add('active');
+      updateDots();restart();
+    }
+    function next(){show(idx+1)}
+    function restart(){clearInterval(timer);timer=setInterval(next,6000)}
+    makeDots();updateDots();restart();
+
+    // Mobile menu
+    const menuToggle=document.getElementById('menuToggle');
+    const navMenu=document.getElementById('navMenu');
+    menuToggle.addEventListener('click',()=>navMenu.classList.toggle('active'));
+
+    // Header scroll
+    const header=document.getElementById('header');
+    window.addEventListener('scroll',()=>{
+      const sliderHeight=document.getElementById('slider').offsetHeight;
+      if(window.scrollY>sliderHeight-80){
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>
