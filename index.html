@@ -1,487 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Steel and Crete</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body,html{font-family:Arial, sans-serif;scroll-behavior:smooth;overflow-x:hidden;}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Steel and Crete Structural Solutions LLP</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: Arial, sans-serif; line-height:1.6; background:#f8f9fa; }
 
-    /* Header */
-    header{
-      position:fixed;top:0;left:0;right:0;z-index:100;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:15px 40px;
-      background:transparent;
-      transition:background 0.4s ease, box-shadow 0.4s ease;
-    }
-    .header-brand{display:flex;align-items:center;gap:10px;}
-    .header-brand img{height:40px;width:40px;object-fit:contain;}
-    .header-brand .brand-text{display:flex;flex-direction:column;line-height:1.2;}
-    .header-brand .line1{font-size:1rem;font-weight:bold;color:#0073e6;}
-    .header-brand .line2{font-size:0.8rem;font-weight:600;color:#0073e6;}
-    header.scrolled .header-brand .line1,
-    header.scrolled .header-brand .line2{color:#333;}
-
-    nav{display:flex;gap:25px;}
-    nav a{
-      text-decoration:none;font-weight:600;font-size:1rem;color:#000;
-      transition:color 0.3s ease;cursor:pointer;
-    }
-    nav a:hover{color:#0073e6;}
-    header.scrolled{background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-    header.scrolled nav a{color:#0073e6;}
-    header.scrolled .menu-toggle span{background:#333;}
-    .menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;}
-    .menu-toggle span{width:25px;height:3px;background:#000;transition:background 0.3s ease;}
-    @media(max-width:768px){
-      nav{display:none;flex-direction:column;position:absolute;top:60px;right:40px;background:rgba(255,255,255,0.95);padding:15px;border-radius:8px;}
-      nav a{color:#000;}
-      nav.active{display:flex;}
-      .menu-toggle{display:flex;}
-    }
-
-    /* Slider */
-    .slider{position:relative;height:100vh;width:100%;overflow:hidden;}
-    .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;}
-    .slide img{width:100%;height:100%;object-fit:cover;}
-    .slide.active{opacity:1;z-index:1;}
-    .overlay-text{
-      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      font-size:2.5rem;font-weight:bold;color:#fff;text-align:center;
-      text-shadow:0 3px 8px rgba(0,0,0,0.7);
-      opacity:0;transition:opacity 1s ease;
-      padding:0 20px;
-    }
-    .slide.active .overlay-text{opacity:1;}
-    .dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:10;}
-    .dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.7);cursor:pointer;}
-    .dot.active{background:#fff;}
-
-    /* Sections */
-    section{padding:80px 40px;}
-    #about{background:#f9f9f9;text-align:center;}
-    #about h2{font-size:2rem;margin-bottom:20px;color:#333;}
-    #about p{max-width:900px;margin:0 auto 20px;line-height:1.6;color:#555;text-align:justify;}
-
-    /* Projects */
-#projects {
-  background: #fff;
-  text-align: center;
-}
-#projects h2 {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #333;
-}
-.single-project {
-  position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-}
-.single-project img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.corner-strip {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  padding: 8px 16px;
-  font-weight: bold;
-  font-size: 0.95rem;
-  text-decoration: none;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: background 0.3s ease;
-}
-.corner-strip:hover {
-  background: #000;
-}
-.corner-strip::after {
-  content: "➔"; /* arrow towards right */
-  font-size: 1rem;
-}
-
-   /* Contact Section Restructure */
-    #contact {
-      background:#f9f9f9;
-      padding:80px 40px;
-    }
-    #contact h2 {
-      text-align:center;
-      font-size:2.2rem;
-      margin-bottom:20px;
-      color:#333;
-    }
-    #contact p.intro {
-      text-align:center;
-      max-width:700px;
-      margin:0 auto 40px;
-      color:#666;
-      font-size:1rem;
-      line-height:1.5;
-    }
-    .contact-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-      gap:25px;
-      margin-top:30px;
-    }
-    .contact-card {
-      background:#fff;
-      padding:25px 20px;
-      border-radius:12px;
-      text-align:center;
-      box-shadow:0 4px 12px rgba(0,0,0,0.08);
-      transition:transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .contact-card:hover {
-      transform:translateY(-6px);
-      box-shadow:0 8px 18px rgba(0,0,0,0.15);
-    }
-    .contact-card .icon {
-      font-size:2.2rem;
-      margin-bottom:12px;
-    }
-    .contact-card h3 {
-      font-size:1.2rem;
-      margin-bottom:12px;
-      color:#444;
-    }
-    .contact-card p {
-      font-size:0.95rem;
-      line-height:1.5;
-      color:#555;
-    }
-    .map-container {
-      margin-top:50px;
-      border-radius:12px;
-      overflow:hidden;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    }
-    .map-container iframe {
-      width:100%;
-      height:350px;
-      border:0;
-    }
-
-    /* WhatsApp */
-    .whatsapp-btn{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:15px;border-radius:50%;box-shadow:0 4px 8px rgba(0,0,0,0.2);font-size:24px;cursor:pointer;z-index:200;}
-
-    /* Footer */
-    footer{background:#111;color:#ccc;text-align:center;padding:15px;font-size:0.9rem;}
-
-    /* Popup Form */
-    .popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:300;}
-    .popup-content{background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;position:relative;}
-    .popup-content h3{text-align:center;margin-bottom:15px;}
-    .popup-content input,.popup-content textarea, .popup-content select{
-      width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:5px;
-    }
-    .popup-content button{background:#25d366;color:#fff;border:none;padding:10px 15px;cursor:pointer;border-radius:5px;width:100%;font-weight:bold;}
-    .popup-content .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 28px;       /* slightly bigger for mobile */
-  font-weight: bold;
-  cursor: pointer;
-  color: #333;
-  transition: color 0.3s ease;
-  z-index: 500;
-  user-select: none;
-}
-
-.popup-content .close:hover {
-  color: #0073e6;  /* blue on hover */
-}
-
-/* Make close button touch-friendly on mobile */
-@media(max-width:768px){
-  .popup-content .close {
-    top: 12px;
-    right: 18px;
-    font-size: 32px;
+  /* Header */
+  header {
+    position: fixed; top:0; left:0; width:100%;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:15px 30px; background:transparent;
+    transition: background 0.3s ease;
+    z-index:1000;
   }
-}
-
-  /* Portrait/mobile optimization */
-@media (orientation: portrait) {
-  .slide img {
-    object-fit: contain;  /* show full image without cropping */
-    background-color: #f6f6f6; /* optional: adds black bars around */
+  header.solid { background:#fff; }
+  
+  .logo-container {
+    display:flex;
+    align-items:center;
+    gap:10px;
   }
-}
-/* Sections */
-    section{padding:80px 40px;}
-    #about{background:#f9f9f9;text-align:center;}
-    #about h2{font-size:2rem;margin-bottom:20px;color:#333;}
-    #about p{max-width:900px;margin:0 auto 20px;line-height:1.6;color:#555;text-align:justify;}
+  .logo-img {
+    width:50px;
+    height:50px;
+    object-fit:contain;
+  }
+  .logo-text {
+    color:#fff;
+    font-weight:bold;
+    line-height:1.2;
+  }
+  header.solid .logo-text { color:#0b63ff; }
+  .logo-text span { display:block; font-size:16px; }
 
-    /* Founders */
-    .founders{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:40px;}
-    .card{perspective:1000px;}
-    .inner{position:relative;width:100%;height:370px;transform-style:preserve-3d;transition:transform 0.8s;}
-    .card:hover .inner{transform:rotateY(180deg);}
-    .front,.back{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;overflow:hidden;box-shadow:0 4px 8px rgba(0,0,0,0.2);} 
+  nav ul { list-style:none; display:flex; }
+  nav ul li { margin-left:20px; }
+  nav ul li a { text-decoration:none; color:#fff; transition: color 0.3s ease; }
+  header.solid nav ul li a { color:#0b63ff; }
 
-    /* Front with centered photo + black strip */
-    .front{display:flex;align-items:center;justify-content:center;flex-direction:column;background:#fff;}
-    .front img{width:100%;height:100%;object-fit:contain;background:#fff;}
-    .name-strip{
-      position:absolute;bottom:0;left:0;right:0;
-      background:rgba(0,0,0,0.85);
-      color:#fff;
-      padding:8px;
-      font-size:14px;
-      text-align:center;
-      font-weight:600;
-    }
-    .name-strip span{display:block;font-size:12px;font-weight:400;}
+  /* Hamburger */
+  .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; z-index:1100; }
+  .hamburger span { width:25px; height:3px; background:#fff; transition: all 0.3s ease; }
+  header.solid .hamburger span { background:#0b63ff; }
+  .mobile-nav {
+    position: fixed; top:0; right:-100%; width:250px; height:100%; background:#fff;
+    box-shadow:-2px 0 5px rgba(0,0,0,0.3); display:flex; flex-direction:column;
+    padding:60px 20px; transition:right 0.3s ease; z-index:1050;
+  }
+  .mobile-nav.active { right:0; }
+  .mobile-nav a { text-decoration:none; color:#0b63ff; font-size:18px; margin:15px 0; }
+  @media (max-width:768px){ nav ul{display:none;} .hamburger{display:flex;} }
 
-    /* Back with scrollable stylish description */
-    .back{
-      background:linear-gradient(135deg,#fdfdfd,#f3f3f3);
-      transform:rotateY(180deg);
-      display:flex;flex-direction:column;align-items:center;
-      padding:15px;
-      text-align:center;
-      overflow-y:auto;
-    }
-    .back h3{font-size:16px;margin-bottom:10px;color:#222;}
-    .back p{font-size:13px;line-height:1.5;color:#444;text-align:justify;}
-    .back::-webkit-scrollbar{width:6px;}
-    .back::-webkit-scrollbar-thumb{background:#bbb;border-radius:4px;}
-  </style>
+  /* Slider */
+  .slider { position:relative; height:100vh; overflow:hidden; }
+  .slides { display:flex; width:300%; height:100%; animation:slide 15s infinite; }
+  .slides img { width:100%; height:100vh; object-fit:cover; }
+  .overlay-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#fff; font-size:2em; text-align:center; }
+  @keyframes slide{ 0%{margin-left:0;} 33%{margin-left:-100%;} 66%{margin-left:-200%;} 100%{margin-left:0;} }
+
+  /* Founder Cards */
+  .founders { display:flex; justify-content:center; gap:20px; padding:50px; flex-wrap:wrap; }
+  .founder-card { width:300px; height:400px; perspective:1000px; }
+  .founder-inner { position:relative; width:100%; height:100%; transition: transform 0.8s; transform-style:preserve-3d; }
+  .founder-card:hover .founder-inner { transform:rotateY(180deg); }
+  .founder-front, .founder-back { position:absolute; width:100%; height:100%; backface-visibility:hidden; border:1px solid #ccc; border-radius:10px; overflow:hidden; }
+  .founder-front img { width:100%; height:100%; object-fit:cover; }
+  .founder-front .info { position:absolute; bottom:0; background:rgba(0,0,0,0.6); color:#fff; width:100%; text-align:center; padding:10px; }
+  .founder-back { background:#f9f9f9; color:#333; transform:rotateY(180deg); padding:20px; overflow-y:auto;text-align: justify; }
+
+  /* About Us */
+  #about { display:flex; justify-content:center; align-items:center; padding:80px 20px; background:#f0f4f8; }
+  .about-box { max-width:1000px; background:#fff; padding:40px; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.1); text-align:center; transition:transform 0.3s ease; }
+  .about-box:hover { transform:translateY(-10px); }
+  .about-box h2 { font-size:2em; margin-bottom:20px; color:#0b63ff; }
+  .about-box p { font-size:1.1em; color:#555; line-height:1.8; }
+
+  /* Enquire Now Button */
+  .enquire-btn {
+    position:fixed; bottom:30px; right:30px;
+    background:linear-gradient(135deg,#007BFF,#00C6FF);
+    color:white; border:none; padding:15px 25px; font-size:16px;
+    border-radius:50px; cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,0.25);
+    transition:all 0.3s ease; z-index:1000;
+  }
+  .enquire-btn:hover { transform:scale(1.05); box-shadow:0 8px 25px rgba(0,0,0,0.3); }
+
+  /* Modal */
+  .modal { display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; overflow:auto; backdrop-filter:blur(8px); background-color:rgba(0,0,0,0.4); transition:all 0.3s ease; }
+  .modal-content { background:#fff; margin:8% auto; padding:30px; border-radius:15px; width:90%; max-width:500px; box-shadow:0 15px 35px rgba(0,0,0,0.3); animation:fadeScale 0.5s; transform-origin:top center; text-align:center; }
+  @keyframes fadeScale { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
+  .close { color:#aaa; float:right; font-size:28px; font-weight:bold; cursor:pointer; }
+  .close:hover { color:#000; }
+
+  /* Modal Logo + Two-line Company Name */
+  .modal-logo-container {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .modal-logo {
+    width:50px;
+    height:50px;
+    object-fit:contain;
+  }
+  .modal-logo-text { font-weight:bold; line-height:1.2; font-size:16px; text-align:left; }
+  .modal-logo-text span { display:block; }
+
+  .modal-form input, .modal-form select, .modal-form textarea { width:100%; padding:12px; margin:10px 0 20px 0; border:1px solid #ccc; border-radius:8px; font-size:14px; transition:border-color 0.3s; }
+  .modal-form input:focus, .modal-form select:focus, .modal-form textarea:focus { border-color:#007BFF; outline:none; }
+  .modal-form button { width:100%; padding:14px; background:linear-gradient(135deg,#28a745,#85e085); color:white; font-size:16px; border:none; border-radius:50px; cursor:pointer; transition:all 0.3s ease; box-shadow:0 6px 15px rgba(0,0,0,0.2); }
+  .modal-form button:hover { transform:scale(1.03); box-shadow:0 8px 20px rgba(0,0,0,0.3); }
+
+  /* Project Sections Cards */
+  h2.projects-title { text-align:center; margin-top:40px; color:#333; }
+  .sections-container { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; padding:50px 20px; }
+  .section-card { position: relative; width:220px; height:140px; border-radius:15px; overflow:hidden; box-shadow:0 6px 15px rgba(0,0,0,0.15); cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold; text-align:center; background-size:cover; background-position:center; }
+  .section-card::after { content:""; position:absolute; inset:0; background: rgba(0,0,0,0.4); transition: background 0.3s ease; }
+  .section-card:hover::after { background: rgba(0,0,0,0.2); }
+  .section-card h3 { position:relative; z-index:1; }
+  .section-card:hover { transform: translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.25); }
+
+  /* Projects List Container */
+  .projects-list-container {
+    max-width:800px; margin:30px auto 50px auto; display:none; flex-direction:column; gap:15px; padding:20px; border-radius:15px; background:white; box-shadow:0 8px 25px rgba(0,0,0,0.15); position:relative; transition:opacity 0.4s ease, transform 0.4s ease;
+  }
+  .projects-list-container.show { display:flex; opacity:1; transform:translateY(0); }
+  .projects-list-container.hide { opacity:0; transform:translateY(-20px); pointer-events:none; }
+  .close-btn { position:absolute; top:10px; right:15px; font-size:24px; font-weight:bold; color:#555; cursor:pointer; transition: color 0.3s; }
+  .close-btn:hover { color:#007BFF; }
+  .project-item { display:flex; justify-content:space-between; padding:12px 20px; border-radius:10px; background:#f1f1f1; transition: all 0.3s; }
+  .project-item:hover { background:#e0f0ff; }
+  .project-name { font-weight:bold; color:#007BFF; }
+  .client-name { font-style:italic; color:#555; }
+
+  /* Contact Section */
+  #contact { padding:80px 20px; background:#f0f4f8; }
+  #contact h2 { text-align:center; color:#0b63ff; margin-bottom:40px; }
+  .contact-cards-container { max-width:1000px; margin:0 auto; display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
+  .contact-card { flex:1 1 300px; background:#fff; padding:30px; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.1); text-align:center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .contact-card:hover { transform: translateY(-8px); box-shadow:0 12px 25px rgba(0,0,0,0.2); }
+  .contact-card h3 { color:#007BFF; margin-bottom:15px; font-size:1.4em; }
+  .contact-card a { display:inline-block; margin-top:15px; padding:10px 20px; background:#007BFF; color:#fff; border-radius:50px; text-decoration:none; transition: all 0.3s ease; }
+  .contact-card a:hover { background:#0056b3; transform: scale(1.05); }
+
+  @media(max-width:768px){
+    .contact-cards-container { flex-direction:column; align-items:center; }
+    .contact-card { width: 90%; }
+  }
+</style>
 </head>
 <body>
-  <header id="header">
-    <div class="header-brand">
-      <img src="logo.png" alt="Logo">
-      <div class="brand-text">
-        <span class="line1">Steel & Crete</span>
-        <span class="line2">Structural Solutions LLP</span>
-      </div>
+
+<!-- Header -->
+<header id="header">
+  <div class="logo-container">
+    <img src="logo.png" alt="Company Logo" class="logo-img">
+    <div class="logo-text">
+      <span>Steel and Crete</span>
+      <span>Structural Solutions LLP</span>
     </div>
-    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
-    <nav id="navMenu">
-      <a href="project.html">Projects</a>
-      <a href="#about">About</a>
-      <a id="projectDiscussionBtn">Project Discussion</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</header>
 
-  <!-- Slider -->
-  <section class="slider" id="slider">
-    <div class="slide active"><img src="1.jpeg"><div class="overlay-text">Tailored Designs For Structures</div></div>
-    <div class="slide"><img src="3.jpeg"><div class="overlay-text">Architectural Components</div></div>
-    <div class="slide"><img src="4.jpg"><div class="overlay-text">Cutting Edge Engineering Solutions</div></div>
-    <div class="slide"><img src="2.jpeg"><div class="overlay-text">Turning Dreams into Reality</div></div>
-    <div class="dots" id="dots"></div>
-  </section>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about">About</a>
+  <a href="#leadership">Leadership</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</div>
 
-  <!-- About / Founders -->
-  <section id="about">
+<!-- Slider -->
+<section class="slider">
+  <div class="slides">
+    <img src="1.jpeg" alt="Slide 1">
+    <img src="2.jpeg" alt="Slide 2">
+    <img src="4.jpg" alt="Slide 3">
+    <img src="3.jpeg" alt="Slide 3">
+  </div>
+  <div class="overlay-text">Structural solutions</div>
+</section>
+
+<!-- About Us -->
+<section id="about">
+  <div class="about-box">
     <h2>About Us</h2>
-    <p><strong>STEEL & CRETE Structural Solutions LLP</strong> is located in Ernakulam, offering high-end engineering solutions. In keeping with global industrial developments, we provide consulting services for all types of civil & structural engineering applications.</p>
-    <p>Our engineers have contributed to prestigious projects in India and abroad, with expertise in structural design, retrofitting, building construction, and vibration problems. We have executed a wide range of projects including nuclear power plants, high-rise buildings, pre-engineered structures, bridges, and machine foundations.</p>
-    <h2>Leadership Team</h2>
-    <div class="founders">
-      <!-- Founder 1 -->
-      <div class="card">
-        <div class="inner">
-          <div class="front">
-            <img src="Dhileep.jpg" alt="Dr. Dhileep M. Kaviyad">
-            <div class="name-strip">Dr. Dhileep M. Kaviyad <span>Chief Structural Engineer</span></div>
-          </div>
-          <div class="back">
-            <h3>Dr. Dhileep M. Kaviyad</h3>
-            <p>Well-experienced in implementing innovative and economical designs for structural systems in collaboration with other stakeholders like architects, contractors, geotechnical experts, MEP, and fire consultants. With nearly 25 years of experience in structural design and retrofitting, he has worked on a diverse set of RCC, PSC, Steel buildings, tanks, towers, machine foundations, and industrial & power plant structures. His expertise includes wind tunnel and shake table tests, aseismic design of nuclear power plants, multiscale modelling, vibration studies on bridges due to high-speed express trains, and sustainable structures. Presently, he is focusing more on the design of composite and/or sustainable structures/architectural components made up from a wide spectrum of materials..</p>
-          </div>
-        </div>
-      </div>
-      <!-- Founder 2 -->
-      <div class="card">
-        <div class="inner">
-          <div class="front">
-            <img src="Daniel.jpeg" alt="Er. Daniel A V">
-            <div class="name-strip">Er. Daniel A V <span>Senior Structural Engineer</span></div>
-          </div>
-          <div class="back">
-            <h3>Er. Daniel A V</h3>
-            <p>  Well-experienced in implementing innovative and economical designs for structural systems in collaboration with other stakeholders like architects, contractors, geotechnical experts, MEP, and fire consultants. With nearly 25 years of experience in structural design and retrofitting, he has worked on a diverse set of RCC, PSC, Steel buildings, tanks, towers, machine foundations, and industrial & power plant structures. His expertise includes wind tunnel and shake table tests, aseismic design of nuclear power plants, multiscale modelling, vibration studies on bridges due to high-speed express trains, and sustainable structures. Presently, he is focusing more on the design of composite and/or sustainable structures/architectural components made up from a wide spectrum of materials.	A dedicated Structural Engineer with over 15 years of experience in the design of RCC and steel structures. His expertise spans residential, commercial, and industrial projects, with a focus on seismic resilience and code compliance. Passionate about innovation and precision, he brings clarity and confidence to every structural challenge, helping clients realize their architectural visions with strength and reliability. He has extensive experience in designing and delivering architectural, structural, and non-structural components using steel and other materials, as well as in soil–structure interaction.	Results-driven Structural Engineer with more than 10 years of experience in the analysis, design, and execution of diverse structures, including residential, commercial, industrial, and infrastructure projects. Skilled in structural design codes, seismic analysis, and sustainable design practices. </p>
-          </div>
-        </div>
-      </div>
-      <!-- Founder 3 -->
-      <div class="card">
-        <div class="inner">
-          <div class="front">
-            <img src="Ramya.jpeg" alt="Er. Ramya K M">
-            <div class="name-strip">Er. Ramya K M <span>Structural Engineer</span></div>
-          </div>
-          <div class="back">
-            <h3>Er. Ramya K M</h3>
-            <p>Results-driven Structural Engineer with more than 10 years of experience in the analysis, design, and execution of diverse structures, including residential, commercial, industrial, and infrastructure projects. Skilled in structural design codes, seismic analysis, and sustainable design practices. </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-<section id="projects">
-  <h2>Our Signature Projects</h2>
-  <div class="single-project">
-    <img src="1.jpeg" alt="Signature Project">
-    <a href="project.html" class="corner-strip">More Projects </a>
+    <p>STEEL & CRETE Structural Solutions is an LLP located in Ernakulam, offering high end engineering solutions. In keeping with the world’s recent industrial 
+developments, Steel & Crete offer consulting services to all types of civil & structural engineering applications. The team members have worked with many 
+of the renowned architects and clients always striving to find better methods to tackle the engineering challenges. Our Engineers were involved in 
+prestigious projects in India and abroad, expertise in the field of structural design, retrofitting, building construction and vibration problems and have also 
+executed a wide range of projects like nuclear power plants, high rise buildings, pre-engineered structures, bridges and machine foundations. </p>
   </div>
 </section>
 
-
-  <!-- Contact -->
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <p class="intro">
-      We’d love to hear from you. Whether you’re looking for structural design services, job opportunities, 
-      or general inquiries, reach out to us at any of our locations below.
-    </p>
-    <div class="contact-grid">
-      <!-- Corporate Office -->
-      <div class="contact-card">
-        <div class="icon">🏢</div>
-        <h3>Corporate Office</h3>
-        <p>
-          Steel and Crete Structural Solution LLP<br>
-          XXVI/406, Pottachal Nagar Road,<br>
-          Changampuzha Nagar PO,<br>
-          Ernakulam - 682033
-        </p>
-      </div>
-      <!-- Workspace -->
-      <div class="contact-card">
-        <div class="icon">🏗️</div>
-        <h3>WorkSpace</h3>
-        <p>
-          Steel and Crete Structural Solution LLP<br>
-          XXI/152, Panadana, Corrazone<br>
-          Cochin University PO, Kalamasery,<br>
-          Ernakulam - 682022
-        </p>
-      </div>
-      <!-- Email -->
-      <div class="contact-card">
-        <div class="icon">📧</div>
-        <h3>Get in Touch</h3>
-        <p><strong>For Structural Design:</strong><br>projects@steelandcrete.com</p>
-        <p><strong>Job Opportunities:</strong><br>steelandcrete@gmail.com</p>
+<!-- Leadership -->
+<section id="leadership">
+  <h2 style="text-align:center; padding:20px;">Leadership</h2>
+  <div class="founders">
+    <div class="founder-card">
+      <div class="founder-inner">
+        <div class="founder-front">
+          <img src="Dhileep.jpg" alt="Founder 1">
+          <div class="info">Founder 1 - CEO</div>
+        </div>
+        <div class="founder-back"><p>Well-experienced in implementing innovative and economical designs for structural systems in collaboration with other stakeholders like architects, contractors, geotechnical experts, MEP, and fire consultants. With nearly 25 years of experience in structural design and retrofitting, he has worked on a diverse set of RCC, PSC, Steel buildings, tanks, towers, machine foundations, and industrial & power plant structures. His expertise includes wind tunnel and shake table tests, aseismic design of nuclear power plants, multiscale modelling, vibration studies on bridges due to high-speed express trains, and sustainable structures. Presently, he is focusing more on the design of composite and/or sustainable structures/architectural components made up from a wide spectrum of materials.</p></div>
       </div>
     </div>
-
-    <!-- Google Map -->
-    <div class="map-container">
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d31430.146250525875!2d76.2989103129192!3d10.035970623982163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sXXVI%2F406%2CPottachal%20Nagar%20Road%2CChangampuzha%20Nagar%20PO%2C%20Ernakulam%20-%20682033!5e0!3m2!1sen!2sin!4v1757668979521!5m2!1sen!2sin" 
-        allowfullscreen="" loading="lazy"></iframe>
+    <div class="founder-card">
+      <div class="founder-inner">
+        <div class="founder-front">
+          <img src="Daniel.jpg" alt="Founder 2">
+          <div class="info">Founder 2 - CTO</div>
+        </div>
+        <div class="founder-back"><p>  Well-experienced in implementing innovative and economical designs for structural systems in collaboration with other stakeholders like architects, contractors, geotechnical experts, MEP, and fire consultants. With nearly 25 years of experience in structural design and retrofitting, he has worked on a diverse set of RCC, PSC, Steel buildings, tanks, towers, machine foundations, and industrial & power plant structures. His expertise includes wind tunnel and shake table tests, aseismic design of nuclear power plants, multiscale modelling, vibration studies on bridges due to high-speed express trains, and sustainable structures. Presently, he is focusing more on the design of composite and/or sustainable structures/architectural components made up from a wide spectrum of materials.	A dedicated Structural Engineer with over 15 years of experience in the design of RCC and steel structures. His expertise spans residential, commercial, and industrial projects, with a focus on seismic resilience and code compliance. Passionate about innovation and precision, he brings clarity and confidence to every structural challenge, helping clients realize their architectural visions with strength and reliability. He has extensive experience in designing and delivering architectural, structural, and non-structural components using steel and other materials, as well as in soil–structure interaction.	Results-driven Structural Engineer with more than 10 years of experience in the analysis, design, and execution of diverse structures, including residential, commercial, industrial, and infrastructure projects. Skilled in structural design codes, seismic analysis, and sustainable design practices. </p></div>
+      </div>
     </div>
-  </section>
-
-  <a href="https://wa.me/918943824028" target="_blank" class="whatsapp-btn">💬</a>
-
-  <!-- Popup -->
-  <div class="popup" id="popupForm">
-    <div class="popup-content">
-      <span class="close" id="closePopup">&times;</span>
-      <h3>Project Discussion</h3>
-      <input type="text" id="name" placeholder="Your Name" required>
-      <input type="text" id="phone" placeholder="Phone Number" required>
-      <input type="email" id="email" placeholder="Email ID" required>
-      <select id="type">
-        <option value="">Select Project Type</option>
-        <option>Architecture</option>
-        <option>Interior</option>
-        <option>Structure</option>
-      </select>
-      <textarea id="details" rows="4" placeholder="Tell us more about your project"></textarea>
-      <button id="sendBtn">Submit to WhatsApp</button>
+    <div class="founder-card">
+      <div class="founder-inner">
+        <div class="founder-front">
+          <img src="Ramya.jpg" alt="Founder 3">
+          <div class="info">Founder 3 - CFO</div>
+        </div>
+        <div class="founder-back"><p>Results-driven Structural Engineer with more than 10 years of experience in the analysis, design, and execution of diverse structures, including residential, commercial, industrial, and infrastructure projects. Skilled in structural design codes, seismic analysis, and sustainable design practices. ..</p></div>
+      </div>
     </div>
   </div>
+</section>
 
-  <footer>Website was developed and deployed by TES</footer>
+<!-- Projects Sections -->
+<h2 class="projects-title" id="projects">Our Projects</h2>
+<div class="sections-container" id="sectionsContainer"></div>
+<div class="projects-list-container" id="projectsListContainer">
+  <span class="close-btn" id="closeProjectsList">&times;</span>
+</div>
 
-  <script>
-    const slides=document.querySelectorAll('.slide');
-    const dotsBox=document.getElementById('dots');
-    let idx=0,timer;
-    function makeDots(){
-      slides.forEach((_,i)=>{
-        const d=document.createElement('span');
-        d.className='dot';
-        d.addEventListener('click',()=>show(i));
-        dotsBox.appendChild(d);
-      });
-    }
-    function updateDots(){[...dotsBox.children].forEach((d,i)=>d.classList.toggle('active',i===idx));}
-    function show(i){
-      slides[idx].classList.remove('active');
-      idx=(i+slides.length)%slides.length;
-      slides[idx].classList.add('active');
-      updateDots();restart();
-    }
-    function next(){show(idx+1)}
-    function restart(){clearInterval(timer);timer=setInterval(next,6000)}
-    makeDots();updateDots();restart();
+<!-- Contact Section -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <div class="contact-cards-container">
+    <div class="contact-card">
+      <h3>Corporate Office</h3>
+      <p>123 Main Street,<br>City Name, PIN 123456</p>
+      <p><strong>Timing:</strong> Mon-Fri 9:00 AM - 6:00 PM</p>
+      <a href="https://www.google.com/maps?q=123+Main+Street+City+Name" target="_blank">View on Map</a>
+    </div>
+    <div class="contact-card">
+      <h3>Workspace</h3>
+      <p>456 Business Park,<br>City Name, PIN 654321</p>
+      <p><strong>Timing:</strong> Mon-Sat 10:00 AM - 7:00 PM</p>
+    </div>
+    <div class="contact-card">
+      <h3>Digital Contact</h3>
+      <p><strong>Jobs:</strong>jobs@company.com</a></p>
+      <p><strong>Projects:</strong>projects@company.com</a></p>
+    </div>
+  </div>
+</section>
 
-    // Mobile menu
-    const menuToggle=document.getElementById('menuToggle');
-    const navMenu=document.getElementById('navMenu');
-    menuToggle.addEventListener('click',()=>navMenu.classList.toggle('active'));
+<!-- Enquire Now Button -->
+<button class="enquire-btn" id="openModal">Enquire Now</button>
 
-    // Header scroll
-    const header=document.getElementById('header');
-    window.addEventListener('scroll',()=>{
-      const sliderHeight=document.getElementById('slider').offsetHeight;
-      if(window.scrollY>sliderHeight-80){
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
+<!-- Modal -->
+<div id="enquireModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <div class="modal-logo-container">
+      <img src="logo.png" alt="Company Logo" class="modal-logo">
+      <div class="modal-logo-text">
+        <span>Steel and Crete</span>
+        <span>Structural Solutions LLP</span>
+      </div>
+    </div>
+    <form class="modal-form" id="enquireForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email ID" required>
+      <input type="tel" name="mobile" placeholder="Mobile Number" required>
+      <select name="service" required>
+        <option value="">Select Service</option>
+        <option value="Architecture">Architecture</option>
+        <option value="Structural">Structural</option>
+        <option value="Interior">Interior</option>
+      </select>
+      <textarea name="message" placeholder="Tell us more..." rows="4" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Header scroll
+  window.addEventListener('scroll', ()=>{ const header=document.getElementById('header'); window.scrollY>50 ? header.classList.add('solid') : header.classList.remove('solid'); });
+
+  // Hamburger
+  const hamburger=document.getElementById('hamburger');
+  const mobileNav=document.getElementById('mobileNav');
+  hamburger.addEventListener('click',(e)=>{ e.stopPropagation(); mobileNav.classList.toggle('active'); });
+  document.addEventListener('click',(e)=>{ if(mobileNav.classList.contains('active')&&!mobileNav.contains(e.target)&&e.target!==hamburger){ mobileNav.classList.remove('active'); } });
+  mobileNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>mobileNav.classList.remove('active')));
+
+  // Enquire Modal
+  const modal=document.getElementById("enquireModal");
+  const openBtn=document.getElementById("openModal");
+  const closeBtn=document.getElementById("closeModal");
+  openBtn.onclick=()=>modal.style.display="block";
+  closeBtn.onclick=()=>modal.style.display="none";
+  window.onclick=(e)=>{ if(e.target==modal) modal.style.display="none"; }
+
+  document.getElementById("enquireForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    const name=this.name.value,email=this.email.value,mobile=this.mobile.value,service=this.service.value,message=this.message.value;
+    const whatsappNumber="9972264755";
+    const text=`Name: ${name}%0AEmail: ${email}%0AMobile: ${mobile}%0AService: ${service}%0AMessage: ${message}`;
+    window.open(`https://wa.me/${whatsappNumber}?text=${text}`,"_blank");
+    modal.style.display="none"; this.reset();
+  });
+
+  // Projects Sections
+  const projectSections = [
+    { title: "Section 1", img: "1.jpeg", projects: [ {name:"Project 1-A", client:"Client A"}, {name:"Project 1-B", client:"Client B"}, {name:"Project 1-C", client:"Client C"} ] },
+    { title: "Section 2", img: "images/section2.jpg", projects: [ {name:"Project 2-A", client:"Client X"}, {name:"Project 2-B", client:"Client Y"} ] },
+    { title: "Section 3", img: "images/section3.jpg", projects: [ {name:"Project 3-A", client:"Client L"}, {name:"Project 3-B", client:"Client M"}, {name:"Project 3-C", client:"Client N"}, {name:"Project 3-D", client:"Client O"} ] }
+  ];
+
+  const sectionsContainer = document.getElementById("sectionsContainer");
+  const projectsListContainer = document.getElementById("projectsListContainer");
+  const closeProjectsBtn = document.getElementById("closeProjectsList");
+  let autoCloseTimeout;
+
+  projectSections.forEach((section,index)=>{
+    const card=document.createElement("div");
+    card.className="section-card";
+    card.style.backgroundImage=`url('${section.img}')`;
+    card.innerHTML=`<h3>${section.title}</h3>`;
+    card.addEventListener("click",()=>showProjects(index));
+    sectionsContainer.appendChild(card);
+  });
+
+  function showProjects(index){
+    clearTimeout(autoCloseTimeout);
+    const section=projectSections[index];
+    projectsListContainer.querySelectorAll('.project-item').forEach(e=>e.remove());
+    section.projects.forEach(p=>{
+      const item=document.createElement("div");
+      item.className="project-item";
+      item.innerHTML=`<span class="project-name">${p.name}</span><span class="client-name">${p.client}</span>`;
+      projectsListContainer.appendChild(item);
     });
+    projectsListContainer.classList.remove('hide');
+    projectsListContainer.classList.add('show');
+    projectsListContainer.scrollIntoView({behavior:"smooth"});
+    autoCloseTimeout=setTimeout(hideProjects,8000);
+  }
 
-    // Popup handling
-    const popup=document.getElementById('popupForm');
-    const projectBtn=document.getElementById('projectDiscussionBtn');
-    const closePopup=document.getElementById('closePopup');
-    projectBtn.addEventListener('click',()=>popup.style.display='flex');
-    closePopup.addEventListener('click',()=>popup.style.display='none');
-    window.addEventListener('click',(e)=>{if(e.target==popup) popup.style.display='none';});
+  function hideProjects(){
+    projectsListContainer.classList.add('hide');
+    projectsListContainer.classList.remove('show');
+    setTimeout(()=>{ projectsListContainer.style.display='none'; },400);
+  }
 
-    // WhatsApp integration
-    document.getElementById('sendBtn').addEventListener('click',()=>{
-      const name=document.getElementById('name').value;
-      const phone=document.getElementById('phone').value;
-      const email=document.getElementById('email').value;
-      const type=document.getElementById('type').value;
-      const details=document.getElementById('details').value;
-
-      if(!name||!phone||!email||!type){alert("Please fill all required fields");return;}
-
-      const msg=`Project Discussion:%0AName: ${name}%0APhone: ${phone}%0AEmail: ${email}%0AType: ${type}%0ADetails: ${details}`;
-      const whatsappUrl=`https://wa.me/918943824028?text=${msg}`;
-      window.open(whatsappUrl,'_blank');
-    });
-  </script>
+  closeProjectsBtn.addEventListener("click", hideProjects);
+</script>
 </body>
 </html>
-
